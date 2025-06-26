@@ -3,6 +3,14 @@ import numpy as np
 import torch
 from gym.spaces.box import Box
 
+
+from gym import spaces
+
+# After self.internal_node_holder, self.leaf_node_holder are defined
+self.observation_space = spaces.Box(low=-1.0, high=1.0, shape=(self.ob_dim,), dtype=np.float32)
+self.action_space = spaces.Discrete(self.leaf_node_holder)  # or appropriate size
+
+
 from wrapper.benchmarks import *
 from wrapper.monitor import *
 from wrapper.vec_env import VecEnvWrapper
