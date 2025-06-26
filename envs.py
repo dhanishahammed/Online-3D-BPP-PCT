@@ -10,6 +10,7 @@ from wrapper.monitor import *
 from wrapper.vec_env import VecEnvWrapper
 from wrapper.shmem_vec_env import ShmemVecEnv
 from wrapper.dummy_vec_env import DummyVecEnv
+from packing_env import PackingEnv
 
 try:
     import dm_control2gym
@@ -32,8 +33,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, args):
             _, domain, task = env_id.split('.')
             env = dm_control2gym.make(domain_name=domain, task_name=task)
         else:
-            env = gym.make(
-                env_id,
+            env = PackingEnv(
                 setting=args.setting,
                 container_size=args.container_size,
                 item_set=args.item_size_set,
@@ -50,9 +50,8 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, args):
 
         env.seed(seed + rank)
 
-        # ✅ Add action_space and observation_space if not defined
         if not hasattr(env, 'action_space'):
-            env.action_space = Discrete(args.leaf_node_holder)  # Assume choosing a leaf node
+            env.action_space = Discrete(args.leaf_node_holder)
 
         if not hasattr(env, 'observation_space'):
             graph_size = args.internal_node_holder + args.leaf_node_holder + 1
@@ -87,10 +86,12 @@ def make_vec_envs(args, log_dir, allow_early_resets):
     envs = [make_env(env_name, seed, i, log_dir, allow_early_resets, args) for i in range(num_processes)]
 
     if len(envs) >= 1:
-        dummy_env = gym.make(env_name,
+        dummy_env = PackingEnv(
             setting=args.setting,
-            item_set=args.item_size_set,
             container_size=args.container_size,
+            item_set=args.item_size_set,
+            data_name=args.dataset_path,
+            load_test_data=args.load_dataset,
             internal_node_holder=args.internal_node_holder,
             leaf_node_holder=args.leaf_node_holder,
             LNES=args.lnes,
