@@ -1,7 +1,6 @@
 import numpy as np
 from functools import reduce
-# from .convex_hull import ConvexHull, point_in_polygen
-from pct_envs.PctContinuous0.convex_hull import ConvexHull, point_in_polygen
+from .convex_hull import ConvexHull, point_in_polygen
 from .PctTools import AddNewEMSZ, maintainEventBottom
 
 class Stack(object):
