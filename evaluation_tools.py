@@ -4,7 +4,7 @@ import torch
 import tools
 
 
-def evaluate(PCT_policy, eval_envs, timeStr, args, device, eval_freq = 5, factor = 1):
+def evaluate(PCT_policy, eval_envs, timeStr, args, device, eval_freq = 100, factor = 1):
     PCT_policy.eval()
     obs = eval_envs.reset()
     obs = torch.FloatTensor(obs).to(device).unsqueeze(dim=0)
