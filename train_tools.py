@@ -55,7 +55,7 @@ class train_tools(object):
         num_steps, num_processes = args.num_steps, args.num_processes
         pct_rollout.obs[0].copy_(all_nodes)
 
-        for update in range(args.max_updates):
+        while True:
             ##############################################
             ####### Collect n-step training sample #######
             ##############################################
