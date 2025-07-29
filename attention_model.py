@@ -1,17 +1,26 @@
 import torch
 from torch import nn
 import math
-from typing import NamedTuple
+# from typing import NamedTuple
+from dataclasses import dataclass #added
 from graph_encoder import GraphAttentionEncoder
 from distributions import FixedCategorical
 from tools import observation_decode_leaf_node, init
 
-class AttentionModelFixed(NamedTuple):
-    node_embeddings: torch.Tensor
-    context_node_projected: torch.Tensor
-    glimpse_key: torch.Tensor
-    glimpse_val: torch.Tensor
-    logit_key: torch.Tensor
+# class AttentionModelFixed(NamedTuple):
+#     node_embeddings: torch.Tensor
+#     context_node_projected: torch.Tensor
+#     glimpse_key: torch.Tensor
+#     glimpse_val: torch.Tensor
+#     logit_key: torch.Tensor
+
+#Added
+@dataclass
+class AttentionModelFixed:
+    encoder_output: torch.Tensor
+    fixed_context: torch.Tensor
+    graph_embedding: torch.Tensor
+    node_embeddings: torch.Tensor #till this
 
     def __getitem__(self, key):
         if torch.is_tensor(key) or isinstance(key, slice):
