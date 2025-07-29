@@ -14,10 +14,9 @@ _NP_TO_CT = {np.float32: ctypes.c_float,
              np.int32: ctypes.c_int32,
              np.int8: ctypes.c_int8,
              np.uint8: ctypes.c_char,
-             
-             """Added below 2 lines"""
+        
              bool: ctypes.c_bool,
-             np.bool_: ctypes.c_bool}
+             np.bool_: ctypes.c_bool} """Added last 2 lines"""
 
              # np.bool: ctypes.c_bool}
 
