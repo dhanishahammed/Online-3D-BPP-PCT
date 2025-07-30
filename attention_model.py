@@ -191,7 +191,11 @@ class AttentionModel(nn.Module):
             self._make_heads(glimpse_val_fixed, num_steps),
             logit_key_fixed.contiguous()
         )
-        return AttentionModelFixed(transEmbedding, fixed_context, *fixed_attention_node_data)
+        #return AttentionModelFixed(transEmbedding, fixed_context, *fixed_attention_node_data)
+        # below 2 are added
+        glimpse_key, glimpse_val, logit_key, *_ = fixed_attention_node_data
+        return AttentionModelFixed(transEmbedding, fixed_context, glimpse_key, glimpse_val, logit_key)
+
 
     def _get_log_p(self, fixed, mask = None, normalize=True):
         # Compute query = context node embedding
