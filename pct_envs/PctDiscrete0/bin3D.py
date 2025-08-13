@@ -40,10 +40,6 @@ class PackingDiscrete(gym.Env):
         self.test = load_test_data
         self.observation_space = gym.spaces.Box(low=0.0, high=self.space.height,
                                                 shape=((self.internal_node_holder + self.leaf_node_holder + self.next_holder) * 9,))
-
-        # below one line is added
-        self.action_space = gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([1.0, 1.0, 1.0], dtype=np.float32), dtype=np.float32)
-                     
         self.next_box_vec = np.zeros((self.next_holder, 9))
 
         self.LNES = LNES  # Leaf Node Expansion Schemes: EMS (recommend), EV, EP, CP, FC
@@ -190,4 +186,3 @@ class PackingDiscrete(gym.Env):
         info = dict()
         info['counter'] = len(self.space.boxes)
         return self.cur_observation(), reward, done, info
-
